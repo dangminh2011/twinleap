@@ -1,0 +1,43 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "vs-x64-debug",
+      "displayName": "Twinleap - Visual Studio x64 Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "architecture": { "value": "x64", "strategy": "external" },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "SDL3_DIR": "${sourceDir}/.deps/SDL3-3.4.18/cmake",
+        "TWINLEAP_FETCH_SDL3": "OFF",
+        "TWINLEAP_BUILD_TESTS": "ON",
+        "TWINLEAP_WINDOWS_GUI": "ON"
+      }
+    },
+    {
+      "name": "vs-x64-release",
+      "displayName": "Twinleap - Visual Studio x64 Release",
+      "inherits": "vs-x64-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "vs-x64-debug", "configurePreset": "vs-x64-debug" },
+    { "name": "vs-x64-release", "configurePreset": "vs-x64-release" }
+  ],
+  "testPresets": [
+    {
+      "name": "vs-x64-debug",
+      "configurePreset": "vs-x64-debug",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "vs-x64-release",
+      "configurePreset": "vs-x64-release",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}
